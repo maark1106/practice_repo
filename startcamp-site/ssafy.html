@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>황준영 | SSAFY Life</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        as="style"
+        crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
+    >
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        leaf: {
+                            dark: '#17351F',
+                            deep: '#23452A',
+                            text: '#35473A',
+                            accent: '#79B85A',
+                            light: '#DCECCF',
+                            soft: '#EEF6E9',
+                            pale: '#F8FBF6',
+                            border: '#D2E3CA',
+                            card: '#FFFFFF'
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background:
+                radial-gradient(circle at 10% 10%, rgba(220, 236, 207, 0.65), transparent 28%),
+                radial-gradient(circle at 90% 30%, rgba(238, 246, 233, 0.9), transparent 30%),
+                linear-gradient(180deg, #ffffff 0%, #f7faf5 100%);
+            color: #35473A;
+        }
+
+        .font-serif {
+            font-family: 'Nanum Myeongjo', serif;
+        }
+
+        .target-card {
+            background-color: #ffffff;
+            border: 1px solid #D2E3CA;
+            transition: all 0.35s ease;
+            box-shadow: 0 10px 28px rgba(35, 69, 42, 0.06);
+        }
+
+        .target-card:hover {
+            transform: translateY(-7px);
+            border-color: #79B85A;
+            box-shadow: 0 18px 38px rgba(35, 69, 42, 0.13);
+        }
+
+        .target-icon {
+            transition: transform 0.35s ease;
+        }
+
+        .target-card:hover .target-icon {
+            transform: scale(1.12) rotate(-4deg);
+        }
+    </style>
+</head>
+
+<body class="pt-20 min-h-screen flex flex-col justify-between">
+
+    <!-- 네비게이션 바 -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-leaf-border shadow-sm">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex justify-between items-center">
+
+            <a
+                href="about.html"
+                class="flex items-center gap-2 text-xl font-serif font-extrabold tracking-widest text-leaf-dark"
+            >
+                <span class="w-3 h-3 rounded-full bg-leaf-accent shadow-[0_0_8px_rgba(121,184,90,0.7)]"></span>
+                <span>Joonyoung's Room</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-2 text-sm font-medium">
+
+                <a
+                    href="about.html"
+                    class="px-4 py-2 rounded-xl text-leaf-text hover:bg-leaf-soft hover:text-leaf-deep transition"
+                >
+                    🔒 About
+                </a>
+
+                <a
+                    href="hobby.html"
+                    class="px-4 py-2 rounded-xl text-leaf-text hover:bg-leaf-soft hover:text-leaf-deep transition"
+                >
+                    🚴 Hobby & Music
+                </a>
+
+                <a
+                    href="ssafy.html"
+                    class="px-4 py-2 rounded-xl bg-leaf-soft text-leaf-deep font-bold border border-leaf-border"
+                >
+                    🤝 SSAFY
+                </a>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="max-w-4xl mx-auto px-6 py-20 w-full flex-grow">
+
+        <div class="text-center mb-16">
+
+            <span class="text-leaf-deep text-xs font-semibold tracking-widest uppercase bg-leaf-soft px-4 py-2 rounded-full border border-leaf-border font-serif">
+                SSAFY LIFE
+            </span>
+
+            <h2 class="text-3xl md:text-4xl font-serif font-bold text-leaf-dark mt-5">
+                싸피에서 얻어가고 싶은 것
+            </h2>
+
+            <p class="text-sm text-leaf-text/70 mt-4">
+                함께 배우고 성장하며 채워가고 싶은 세 가지 목표
+            </p>
+
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <!-- 알고리즘 -->
+            <div class="target-card p-7 rounded-3xl flex flex-col justify-between min-h-[260px]">
+
+                <div>
+
+                    <div class="target-icon w-14 h-14 rounded-2xl bg-leaf-soft border border-leaf-border flex items-center justify-center text-2xl mb-6">
+                        🧠
+                    </div>
+
+                    <span class="text-[10px] text-leaf-accent font-mono font-bold tracking-widest">
+                        TARGET 01
+                    </span>
+
+                    <h3 class="font-serif font-bold text-leaf-dark text-xl mt-2 mb-4">
+                        알고리즘 지식
+                    </h3>
+
+                    <p class="text-leaf-text text-sm leading-relaxed">
+                        문제의 논리 흐름을 명확하게 파악하고,
+                        효율적인 해결 방법을 찾아낼 수 있는 알고리즘 역량을 체득합니다.
+                    </p>
+
+                </div>
+
+                <div class="h-1.5 w-full bg-leaf-soft rounded-full mt-8 overflow-hidden">
+                    <div class="h-full w-4/5 bg-leaf-accent rounded-full"></div>
+                </div>
+
+            </div>
+
+            <!-- 소프트 역량 -->
+            <div class="target-card p-7 rounded-3xl flex flex-col justify-between min-h-[260px]">
+
+                <div>
+
+                    <div class="target-icon w-14 h-14 rounded-2xl bg-leaf-soft border border-leaf-border flex items-center justify-center text-2xl mb-6">
+                        💡
+                    </div>
+
+                    <span class="text-[10px] text-leaf-accent font-mono font-bold tracking-widest">
+                        TARGET 02
+                    </span>
+
+                    <h3 class="font-serif font-bold text-leaf-dark text-xl mt-2 mb-4">
+                        소프트 역량
+                    </h3>
+
+                    <p class="text-leaf-text text-sm leading-relaxed">
+                        동료들과 적극적으로 협업하고 소통하며,
+                        다양한 의견 속에서 원활하게 문제를 해결하는 역량을 강화합니다.
+                    </p>
+
+                </div>
+
+                <div class="h-1.5 w-full bg-leaf-soft rounded-full mt-8 overflow-hidden">
+                    <div class="h-full w-3/4 bg-leaf-accent rounded-full"></div>
+                </div>
+
+            </div>
+
+            <!-- 14반 동료들 -->
+            <div class="target-card p-7 rounded-3xl flex flex-col justify-between min-h-[260px]">
+
+                <div>
+
+                    <div class="target-icon w-14 h-14 rounded-2xl bg-leaf-soft border border-leaf-border flex items-center justify-center text-2xl mb-6">
+                        🤝
+                    </div>
+
+                    <span class="text-[10px] text-leaf-accent font-mono font-bold tracking-widest">
+                        TARGET 03
+                    </span>
+
+                    <h3 class="font-serif font-bold text-leaf-dark text-xl mt-2 mb-4">
+                        14반 동료들
+                    </h3>
+
+                    <p class="text-leaf-text text-sm leading-relaxed">
+                        수줍은 첫 만남을 넘어 14반의 멋진 동료들과
+                        서로 의지하고 응원할 수 있는 돈독한 관계를 만들고 싶습니다.
+                    </p>
+
+                </div>
+
+                <div class="h-1.5 w-full bg-leaf-soft rounded-full mt-8 overflow-hidden">
+                    <div class="h-full w-full bg-leaf-accent rounded-full"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- 하단 메시지 -->
+        <div class="mt-12 bg-leaf-soft border border-leaf-border rounded-3xl px-6 py-8 text-center">
+
+            <p class="text-sm text-leaf-text mb-2">
+                알고리즘과 협업 능력을 함께 성장시키며
+            </p>
+
+            <p class="font-serif font-bold text-xl text-leaf-dark">
+                14반 동료들과 오래 기억에 남는 시간을 만들고 싶습니다.
+            </p>
+
+        </div>
+
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="py-8 border-t border-leaf-border bg-leaf-soft/80 text-center text-xs text-leaf-text/70">
+
+        <p class="font-serif">
+            황준영 | 처음엔 조용하지만, 친해지면 먼저 다가가는 사람
+        </p>
+
+    </footer>
+
+</body>
+</html>
