@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>황준영 | 아늑한 초록빛 방</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        as="style"
+        crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
+    >
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        leaf: {
+                            dark: '#17351F',
+                            deep: '#23452A',
+                            text: '#35473A',
+                            accent: '#79B85A',
+                            light: '#DCECCF',
+                            soft: '#EEF6E9',
+                            pale: '#F8FBF6',
+                            border: '#D2E3CA',
+                            card: '#FFFFFF'
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background:
+                radial-gradient(circle at 10% 10%, rgba(220, 236, 207, 0.65), transparent 28%),
+                radial-gradient(circle at 90% 30%, rgba(238, 246, 233, 0.9), transparent 30%),
+                linear-gradient(180deg, #ffffff 0%, #f7faf5 100%);
+            color: #35473A;
+        }
+
+        .font-serif {
+            font-family: 'Nanum Myeongjo', serif;
+        }
+
+        .hover-card {
+            background-color: #ffffff;
+            border: 1px solid #D2E3CA;
+            transition: all 0.35s ease;
+            box-shadow: 0 10px 28px rgba(35, 69, 42, 0.06);
+        }
+
+        .hover-card:hover {
+            transform: translateY(-6px);
+            border-color: #79B85A;
+            box-shadow: 0 18px 38px rgba(35, 69, 42, 0.13);
+        }
+    </style>
+</head>
+
+<body class="pt-20 min-h-screen flex flex-col justify-between">
+
+    <!-- 네비게이션 바 -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-leaf-border shadow-sm">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex justify-between items-center">
+
+            <a
+                href="about.html"
+                class="flex items-center gap-2 text-xl font-serif font-extrabold tracking-widest text-leaf-dark"
+            >
+                <span class="w-3 h-3 rounded-full bg-leaf-accent shadow-[0_0_8px_rgba(121,184,90,0.7)]"></span>
+                <span>Joonyoung's Room</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-2 text-sm font-medium">
+
+                <a
+                    href="about.html"
+                    class="px-4 py-2 rounded-xl bg-leaf-soft text-leaf-deep font-bold border border-leaf-border"
+                >
+                    🔒 About
+                </a>
+
+                <a
+                    href="hobby.html"
+                    class="px-4 py-2 rounded-xl text-leaf-text hover:bg-leaf-soft hover:text-leaf-deep transition"
+                >
+                    🚴 Hobby & Music
+                </a>
+
+                <a
+                    href="ssafy.html"
+                    class="px-4 py-2 rounded-xl text-leaf-text hover:bg-leaf-soft hover:text-leaf-deep transition"
+                >
+                    🤝 SSAFY
+                </a>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="max-w-4xl mx-auto px-6 py-20 text-center w-full flex-grow">
+
+        <span class="text-xs tracking-[0.25em] text-leaf-accent font-semibold mb-4 block font-serif">
+            MBTI & PERSONALITY
+        </span>
+
+        <h1 class="text-3xl md:text-5xl font-serif font-extrabold text-leaf-dark leading-tight mb-8">
+            “처음엔 조용하지만,<br>
+            친해지면 먼저 다가가는 황준영입니다.”
+        </h1>
+
+        <!-- 성격 변화 영역 -->
+        <div class="bg-white rounded-3xl p-6 md:p-10 border border-leaf-border max-w-4xl mx-auto shadow-[0_18px_50px_rgba(35,69,42,0.10)] mb-24">
+
+            <div class="px-6 py-1.5 bg-leaf-soft w-max mx-auto rounded-full border border-leaf-border text-leaf-deep font-extrabold text-lg font-serif mb-10">
+                ISFJ
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 w-full">
+
+                <!-- 처음엔 낯가림 -->
+                <div class="flex-1 bg-leaf-pale border border-leaf-border rounded-2xl p-6 relative w-full text-center">
+
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-leaf-deep text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-sm whitespace-nowrap">
+                        🔒 처음엔 낯가림
+                    </div>
+
+                    <p class="text-sm md:text-base font-serif italic text-leaf-dark mt-4 mb-3">
+                        "아직은 한창 마음을 여는 단계입니다..!"
+                    </p>
+
+                    <p class="text-xs md:text-sm text-leaf-text leading-relaxed">
+                        수줍음이 많아 조심스레 상대의 이야기에 귀를 기울입니다.
+                        예의 바르고 차분하게 다가가기 때문에 다소 얌전하게 보일 수 있습니다.
+                    </p>
+
+                </div>
+
+                <!-- 화살표 -->
+                <div class="text-leaf-accent rotate-90 md:rotate-0 flex-shrink-0 py-2 md:py-0">
+
+                    <svg
+                        class="w-8 h-8 animate-pulse"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M17 8l4 4m0 0l-4 4m4-4H3"
+                        ></path>
+                    </svg>
+
+                </div>
+
+                <!-- 친해진 후 -->
+                <div class="flex-1 bg-leaf-soft border border-leaf-accent/60 rounded-2xl p-6 relative w-full text-center shadow-[0_10px_25px_rgba(121,184,90,0.10)]">
+
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-leaf-accent text-leaf-dark text-xs font-bold px-4 py-1.5 rounded-full shadow-sm whitespace-nowrap">
+                        🔑 친해진 후
+                    </div>
+
+                    <p class="text-sm md:text-base font-serif italic text-leaf-deep mt-4 mb-3">
+                        "사실 저 장난꾸러기예요! 먼저 말 걸죠!"
+                    </p>
+
+                    <p class="text-xs md:text-sm text-leaf-text leading-relaxed">
+                        마음의 벽이 허물어지는 순간 먼저 말을 건네고 활발해집니다.
+                        엉뚱하고 귀여운 장난도 먼저 걸며 편안하게 다가갑니다.
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 주변 사람들이 말하는 황준영 -->
+        <div class="mt-8 text-left">
+
+            <div class="text-center mb-10">
+
+                <span class="text-leaf-deep text-xs font-semibold tracking-widest uppercase bg-leaf-soft px-4 py-2 rounded-full border border-leaf-border font-serif">
+                    What Friends Say
+                </span>
+
+                <h2 class="text-2xl md:text-3xl font-serif font-bold text-leaf-dark mt-5">
+                    주변 사람들이 말하는 황준영
+                </h2>
+
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <div class="p-6 rounded-2xl hover-card flex flex-col justify-between">
+                    <div>
+                       
+
+                        <h4 class="text-base font-serif font-bold text-leaf-dark mb-3">
+                            1. 성실하고 책임감이 강함
+                        </h4>
+
+                        <p class="text-xs text-leaf-text leading-relaxed">
+                            어떤 일이 주어지더라도 요란하거나 드러내지 않고,
+                            묵묵히 제 몫을 해내며 맡은 일에 항상 최선을 다합니다.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-6 rounded-2xl hover-card flex flex-col justify-between">
+                    <div>
+                       
+                        <h4 class="text-base font-serif font-bold text-leaf-dark mb-3">
+                            2. 친해지면 편하다
+                        </h4>
+
+                        <p class="text-xs text-leaf-text leading-relaxed">
+                            말투가 나근나근하여
+                            주위 사람들이 부담 없이 속마음을 털어놓고 편안하게 소통할 수 있습니다.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-6 rounded-2xl hover-card flex flex-col justify-between">
+                    <div>
+                        
+                        <h4 class="text-base font-serif font-bold text-leaf-dark mb-3">
+                            3. 무뚝뚝하게 보이지만 생각보다 F다
+                        </h4>
+
+                        <p class="text-xs text-leaf-text leading-relaxed">
+                            겉은 우직하고 단단해 보이지만, 일상의 소박한 풍경이나
+                            마음에 울림을 주는 가사와 음악을 깊은 감성으로 담아냅니다.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="py-8 border-t border-leaf-border bg-leaf-soft/80 text-center text-xs text-leaf-text/70">
+
+        <p class="font-serif">
+            황준영 | 처음엔 조용하지만, 친해지면 먼저 다가가는 사람
+        </p>
+
+    </footer>
+
+</body>
+</html>
