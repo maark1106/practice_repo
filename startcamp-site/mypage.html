@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>황준영 | 아늑한 초록빛 기록 공간</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: 나눔명조 및 프리텐다드 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* 이전보다 한 층 연하고 부드러워진 미디엄 딥 그린 테마 */
+            --cozy-bg-warm: #1E351D;      /* 부드러운 쑥색과 깊은 잎새의 중간 톤 */
+            --cozy-bg-deep: #132212;      /* 은은하게 그늘진 숲속의 고요한 톤 */
+            --cozy-text: #EBF4EB;         /* 눈이 피로하지 않은 부드러운 미트 크림 */
+            --cozy-accent: #9ED69A;       /* 싱그러움을 가득 머금은 연둣빛 포인트 */
+            --cozy-card: #263E25;         /* 부드러운 이끼색을 닮은 카드 배경 */
+            --cozy-border: #3A5A38;       /* 정갈하고 은은한 초록빛 경계 테두리 */
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background: linear-gradient(135deg, var(--cozy-bg-warm) 0%, var(--cozy-bg-deep) 100%);
+            color: var(--cozy-text);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .font-serif {
+            font-family: 'Nanum Myeongjo', serif;
+        }
+
+        /* 숲속 반딧불 및 램프 광선 효과 */
+        .lamp-glow {
+            box-shadow: 0 0 100px 40px rgba(158, 214, 154, 0.2);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .lamp-glow.active {
+            box-shadow: 0 0 140px 60px rgba(220, 161, 82, 0.35); /* 따스한 오렌지빛 전구 온기 */
+            background-color: #DCA152;
+        }
+
+        /* 입체 깊이를 더한 프리미엄 수제 카드 */
+        .hover-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid var(--cozy-border);
+            background-color: var(--cozy-card);
+        }
+        .hover-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 32px -10px rgba(12, 23, 11, 0.5);
+            border-color: var(--cozy-accent);
+        }
+
+        /* LP 레코드판 회전 애니메이션 */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+            animation: spin 8s linear infinite;
+        }
+
+        /* 커스텀 포레스트 스크롤바 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--cozy-bg-deep);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--cozy-border);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--cozy-accent);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cozy: {
+                            warm: '#1E351D',
+                            deep: '#132212',
+                            text: '#EBF4EB',
+                            accent: '#9ED69A',
+                            card: '#263E25',
+                            border: '#3A5A38',
+                            gold: '#DCA152'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="selection:bg-emerald-800 selection:text-emerald-100 min-h-screen flex flex-col justify-between">
+
+    <!-- 1. HERO SECTION -->
+    <header class="relative min-h-screen flex flex-col justify-center items-center px-6 overflow-hidden">
+        <!-- 스탠드 램프 비주얼 -->
+        <div class="absolute top-12 flex flex-col items-center">
+            <!-- 감성적인 스탠드 램프 SVG -->
+            <svg class="w-14 h-14 text-cozy-text opacity-90 cursor-pointer hover:scale-105 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" id="lampSvgBtn">
+                <path d="M12 2v4M12 6c-2.5 0-4.5 2-4.5 4.5h9C16.5 8 14.5 6 12 6zM6 15h12M9 15l-1 5M15 15l1 5M8 20h8" stroke-linecap="round"/>
+            </svg>
+            <!-- 빛줄기 영역 -->
+            <div id="lampGlow" class="lamp-glow w-24 h-6 bg-amber-100/40 rounded-full cursor-pointer mt-1" title="스탠드를 클릭해서 방의 불을 조절해 보세요!"></div>
+            <p class="text-[9px] text-cozy-accent/70 mt-3 font-mono tracking-widest animate-pulse">CLICK LAMP TO TOGGLE NIGHT MODE</p>
+        </div>
+
+        <div class="text-center max-w-4xl z-10 mt-16 px-4">
+            <span class="text-xs tracking-[0.25em] uppercase text-cozy-accent font-semibold mb-6 block font-serif">
+                WELCOME TO JUNYOUNG'S ROOM
+            </span>
+            <!-- 요청된 성격 중심 캐치프레이즈 -->
+            <h1 class="text-3xl md:text-5xl font-serif font-extrabold text-white leading-tight md:leading-snug mb-8">
+                “처음엔 조용하지만,<br>
+                친해지면 먼저 다가가는 황준영입니다.”
+            </h1>
+            <p class="text-sm md:text-base text-cozy-text/75 max-w-xl mx-auto leading-relaxed font-light mb-12">
+                처음 마주할 때 감도는 살며시 조용한 낯가림을 건너면,<br>
+                금세 마음을 열고 가득 채워둔 다정함과 유쾌한 수다를 건넵니다.<br>
+                은은한 허브향이 나는 이 초록빛 방에서, 저의 조각들을 편안히 구경해 보세요.
+            </p>
+            
+            <a href="#about" class="inline-flex flex-col items-center text-cozy-accent hover:text-white transition duration-300">
+                <span class="text-xs tracking-widest font-serif mb-2">황준영의 방 안으로 들어가기</span>
+                <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path>
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <!-- 2. ABOUT ME & MBTI SECTION -->
+    <section id="about" class="py-24 px-6 md:px-12 bg-black/10">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-cozy-accent text-xs font-semibold tracking-widest uppercase bg-cozy-card px-3 py-1.5 rounded-full border border-cozy-border font-serif">MBTI & Personality</span>
+                <h2 class="text-3xl font-serif font-bold text-white mt-4">따스한 반전 매력, ISFJ</h2>
+                <p class="text-sm text-cozy-text/70 mt-2">상대방의 마음속 온도를 조용히 맞추는 싱그러운 은빛 다정함.</p>
+            </div>
+
+            <!-- ISFJ 성격 카드 -->
+            <div class="bg-cozy-card rounded-3xl p-8 md:p-12 shadow-sm border border-cozy-border max-w-2xl mx-auto">
+                <div class="flex flex-col items-center text-center">
+                    <!-- MBTI Badge -->
+                    <div class="px-6 py-2 bg-emerald-950/40 rounded-full border border-cozy-border text-cozy-accent font-extrabold text-xl tracking-widest font-serif mb-6 shadow-xs">
+                        ISFJ
+                    </div>
+
+                    <!-- 대화형 모드 버튼 (낯가림과 수다쟁이 모드 수동 탭) -->
+                    <div class="w-full flex justify-center gap-2 mb-8 bg-[#182C17] p-1.5 rounded-2xl max-w-sm border border-cozy-border">
+                        <button id="btnShy" class="flex-1 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 bg-cozy-border text-white shadow-xs" onclick="setTone('shy')">
+                            🔒 낯가림 준영 (조용한 상태)
+                        </button>
+                        <button id="btnFriendly" class="flex-1 py-2.5 rounded-xl text-xs font-semibold transition-all duration-300 text-cozy-text/60 hover:text-white" onclick="setTone('friendly')">
+                            🔑 다정 준영 (장난 가득!)
+                        </button>
+                    </div>
+
+                    <!-- 내용 본문 -->
+                    <div class="min-h-[140px] flex flex-col justify-center items-center w-full px-2">
+                        <!-- 낯가림 모드 -->
+                        <div id="textShy" class="space-y-4 transition-all duration-500">
+                            <p class="text-lg font-serif italic text-white/90">"아직은 만나서 한창 마음을 여는 단계입니다..!"</p>
+                            <p class="text-sm md:text-base text-cozy-text/80 leading-relaxed max-w-lg">
+                                처음 뵐 때는 수줍음이 많아 조심스레 상대의 이야기에 귀를 기울입니다.<br>
+                                예의 바르고 차분하게 다가가기 때문에 다소 얌전하게 보일 수 있지만,<br>
+                                속으로는 얼른 긴장이 풀리길 바라는 따뜻한 정성을 안고 있어요.
+                            </p>
+                        </div>
+
+                        <!-- 친해진 모드 -->
+                        <div id="textFriendly" class="hidden space-y-4 transition-all duration-500">
+                            <p class="text-xl font-serif italic text-cozy-accent">"사실 저 장난꾸러기에요! 먼저 말 걸며 다가가죠!"</p>
+                            <p class="text-sm md:text-base text-cozy-text/80 leading-relaxed max-w-lg">
+                                마음에 벽이 톡 허물어지는 순간, 먼저 말을 건네고 쾌활한 수다쟁이가 됩니다.<br>
+                                엉뚱하고 귀여운 장난도 잘 치고, 먼저 장난도 걸며 더 다정하고 시원시원하게 다가갑니다!<br>
+                                편하고 허물없는 친구처럼 든든한 동료가 될 준비가 언제든 되어 있습니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. 주변 사람들이 말하는 황준영 -->
+    <section class="py-24 px-6 md:px-12 bg-cozy-deep">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-cozy-accent text-xs font-semibold tracking-widest uppercase bg-cozy-card px-3 py-1.5 rounded-full border border-cozy-border font-serif">What Others Say</span>
+                <h2 class="text-3xl font-serif font-bold text-white mt-4">그들이 보는 황준영</h2>
+                <p class="text-cozy-text/70 mt-2">소중한 주변 사람들이 곁에서 바라본 저의 가장 진솔한 세 가지 결들을 담았습니다.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 카드 1: 성실과 책임감 -->
+                <div class="bg-cozy-card rounded-2xl p-8 border border-cozy-border hover-card flex flex-col justify-between shadow-xs">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-[#1D321C] border border-cozy-border flex items-center justify-center text-cozy-accent mb-6 font-bold text-lg font-mono">
+                            01
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white mb-4">굳건한 책임감과 성실함</h3>
+                        <p class="text-cozy-text/85 text-sm leading-relaxed">
+                            "준영이는 어떤 일이 주어지더라도 묵묵히 제 몫을 해내며 맡은 일에 최선을 다해."<br>
+                            요란하거나 드러내지 않아도, 언제나 약속된 자리에서 책임감 넘치는 신뢰를 줍니다.
+                        </p>
+                    </div>
+                    <div class="border-t border-cozy-border/50 pt-4 mt-6 text-[11px] text-cozy-text/40 font-mono">
+                        #성실의아이콘 #끝까지책임감 #믿을수있는사람
+                    </div>
+                </div>
+
+                <!-- 카드 2: 부드러운 말투 -->
+                <div class="bg-cozy-card rounded-2xl p-8 border border-cozy-border hover-card flex flex-col justify-between shadow-xs">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-[#1D321C] border border-cozy-border flex items-center justify-center text-cozy-accent mb-6 font-bold text-lg font-mono">
+                            02
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white mb-4">대화가 즐거운 부드러운 말투</h3>
+                        <p class="text-cozy-text/85 text-sm leading-relaxed">
+                            "이야기 나누면 왠지 말투가 너무 부드러워서 마음이 참 편안해져."<br>
+                            모나지 않고 상냥하게 다듬어진 말투 덕분에 주위의 많은 이들이 부담 없이 속마음을 털어놓고 기댈 수 있습니다.
+                        </p>
+                    </div>
+                    <div class="border-t border-cozy-border/50 pt-4 mt-6 text-[11px] text-cozy-text/40 font-mono">
+                        #다정한말투 #대화메이트 #편안함을주는온기
+                    </div>
+                </div>
+
+                <!-- 카드 3: 생각보다 감성적 -->
+                <div class="bg-cozy-card rounded-2xl p-8 border border-cozy-border hover-card flex flex-col justify-between shadow-xs">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-[#1D321C] border border-cozy-border flex items-center justify-center text-cozy-accent mb-6 font-bold text-lg font-mono">
+                            03
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white mb-4">알고 보면 촉촉한 감성주의자</h3>
+                        <p class="text-cozy-text/85 text-sm leading-relaxed">
+                            "겉은 우직하고 단단해 보이지만, 알고 보면 생각이 깊고 꽤 감성적이야."<br>
+                            일상의 소박한 풍경, 마음에 울림을 주는 가사와 음악들을 깊은 감성으로 오롯이 담아내는 고운 결을 가지고 있습니다.
+                        </p>
+                    </div>
+                    <div class="border-t border-cozy-border/50 pt-4 mt-6 text-[11px] text-cozy-text/40 font-mono">
+                        #생각보다감성적 #감성준영 #의외의소년미
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. HOBBY & PLAYLIST CARDS -->
+    <section class="py-24 px-6 md:px-12 bg-black/10">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-cozy-accent text-xs font-semibold tracking-widest uppercase bg-cozy-card px-3 py-1.5 rounded-full border border-cozy-border font-serif">My Cozy Favorites</span>
+                <h2 class="text-3xl font-serif font-bold text-white mt-4">준영의 일상 조각들</h2>
+                <p class="text-cozy-text/70 mt-2">체력을 채우는 동적인 활동들과, 감수성을 채워주는 방구석 플레이리스트.</p>
+            </div>
+
+            <!-- 취미 & 좋아하는 음악 복합 Grid 카드 형태 -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+                
+                <!-- 취미 카드: 3가지 취미를 모은 정갈한 보드 카드 -->
+                <div class="md:col-span-7 bg-cozy-card rounded-2xl p-8 border border-cozy-border shadow-xs flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-serif font-bold text-white mb-6 flex items-center gap-2">
+                            <span>🚲 매일의 에너지를 채우는 취미</span>
+                        </h3>
+                        
+                        <div class="space-y-6">
+                            <!-- 취미 1: 유튜브 보기 -->
+                            <div class="flex items-start gap-4 p-4 rounded-xl hover:bg-[#2F4B2E] transition duration-300">
+                                <div class="w-10 h-10 rounded-full bg-emerald-950 flex items-center justify-center text-cozy-accent flex-shrink-0 text-xl border border-cozy-border">📺</div>
+                                <div>
+                                    <h4 class="font-bold text-white text-base">방구석 알고리즘 여행, 유튜브 시청</h4>
+                                    <p class="text-cozy-text/75 text-sm mt-1 leading-relaxed">
+                                        가장 무장해제된 자세로 알고리즘 여행을 떠납니다. 교양, 다큐멘터리, 예능, 혹은 마음을 잔잔하게 해주는 편안한 콘텐츠들을 깊이 있게 수집합니다.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 취미 2: 운동 -->
+                            <div class="flex items-start gap-4 p-4 rounded-xl hover:bg-[#2F4B2E] transition duration-300">
+                                <div class="w-10 h-10 rounded-full bg-emerald-950 flex items-center justify-center text-cozy-accent flex-shrink-0 text-xl border border-cozy-border">💪</div>
+                                <div>
+                                    <h4 class="font-bold text-white text-base">묵묵하게 몸과 마음을 조각하는, 헬스</h4>
+                                    <p class="text-cozy-text/75 text-sm mt-1 leading-relaxed">
+                                        무거운 덤벨에 조용히 집중하여 땀을 흠뻑 흘릴 때 찾아오는 복잡한 생각의 고요함을 좋아합니다. 신체적 성취감과 에너지를 성실하게 단련합니다.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 취미 3: 자전거 타기 -->
+                            <div class="flex items-start gap-4 p-4 rounded-xl hover:bg-[#2F4B2E] transition duration-300">
+                                <div class="w-10 h-10 rounded-full bg-emerald-950 flex items-center justify-center text-cozy-accent flex-shrink-0 text-xl border border-cozy-border">🚴</div>
+                                <div>
+                                    <h4 class="font-bold text-white text-base">바람을 온전히 머금는, 자전거 라이딩</h4>
+                                    <p class="text-cozy-text/75 text-sm mt-1 leading-relaxed">
+                                        선선한 강변을 따라 페달을 가볍게 밟아 나갈 때 만끽하는 자유를 사랑합니다. 스쳐 지나가는 자연의 소리와 공기의 촉감을 만끽하며 머리를 비워냅니다.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 좋아하는 음악: LP 플레이어 컨셉 비주얼 카드 -->
+                <div class="md:col-span-5 bg-[#122111] text-white rounded-2xl p-8 border border-emerald-950 shadow-lg flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute -right-16 -top-16 w-44 h-44 rounded-full bg-emerald-950/20 blur-xl"></div>
+                    
+                    <div>
+                        <span class="text-cozy-accent text-xs font-mono tracking-widest uppercase">My Playlist</span>
+                        <h3 class="text-2xl font-serif font-bold mt-2 mb-6">귀를 때리는 힙합 클래식</h3>
+                        
+                        <!-- 턴테이블 시각화 -->
+                        <div class="flex flex-col items-center justify-center my-6">
+                            <div class="relative w-36 h-36 bg-black rounded-full border-4 border-[#2A4429] flex items-center justify-center shadow-lg animate-spin-slow">
+                                <!-- LP 그루브 장식 -->
+                                <div class="absolute inset-2 rounded-full border border-neutral-900"></div>
+                                <div class="absolute inset-6 rounded-full border border-neutral-900"></div>
+                                <div class="w-12 h-12 bg-emerald-900 rounded-full border-4 border-black flex items-center justify-center">
+                                    <div class="w-2.5 h-2.5 bg-black rounded-full"></div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-cozy-accent mt-4 font-mono tracking-wider">NOW SPINNING: CLASSIC HIPHOP</p>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="p-3 bg-black/30 rounded-xl border border-emerald-950 flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-bold">리쌍 (Leessang)</p>
+                                    <p class="text-xs text-emerald-400">삶의 한(恨)과 시 같은 정갈한 가사</p>
+                                </div>
+                                <span class="text-lg">🎙️</span>
+                            </div>
+
+                            <div class="p-3 bg-black/30 rounded-xl border border-emerald-950 flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-bold">에픽하이 (Epik High)</p>
+                                    <p class="text-xs text-emerald-400">문학적인 운율과 가슴을 뛰게 하는 비트</p>
+                                </div>
+                                <span class="text-lg">🎧</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-6 border-t border-emerald-950 mt-6 text-xs text-emerald-600 font-mono">
+                        #내마음의_BGM #힙합클래식 #에픽하이 #리쌍
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. 싸피에서 얻어가고 싶은 것 (목표) -->
+    <section class="py-24 px-6 md:px-12 bg-cozy-deep">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-cozy-accent text-xs font-semibold tracking-widest uppercase bg-cozy-card px-3 py-1.5 rounded-full border border-cozy-border font-serif">SSAFY Aspirations</span>
+                <h2 class="text-3xl font-serif font-bold text-white mt-4">싸피(SSAFY)에서 채워갈 보물들</h2>
+                <p class="text-cozy-text/70 mt-2">14반의 여정 속에서 꾹꾹 눌러 담아 가슴 깊이 채워가고 싶은 세 가지 소망.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- 목표 카드 1 -->
+                <div class="bg-cozy-card p-6 rounded-2xl border border-cozy-border shadow-sm flex flex-col justify-between hover-card">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-950 flex items-center justify-center text-2xl border border-cozy-border">🤝</div>
+                        <h3 class="text-lg font-bold text-white">14반의 다양한 동료들과 친해지기</h3>
+                        <p class="text-xs md:text-sm text-cozy-text/80 leading-relaxed">
+                            수줍은 첫 만남의 어색함을 넘어서, 14반의 멋진 동료들과 서서히 그리고 아주 끈끈하고 돈독하게 녹아들고 싶습니다.
+                        </p>
+                    </div>
+                    <span class="text-right text-[10px] font-mono text-cozy-accent mt-4 font-bold">TARGET 01</span>
+                </div>
+
+                <!-- 목표 카드 2 -->
+                <div class="bg-cozy-card p-6 rounded-2xl border border-cozy-border shadow-sm flex flex-col justify-between hover-card">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-950 flex items-center justify-center text-2xl border border-cozy-border">💡</div>
+                        <h3 class="text-lg font-bold text-white">소프트 역량</h3>
+                        <p class="text-xs md:text-sm text-cozy-text/80 leading-relaxed">
+                            협업하고 상호작용하며 문제를 해결해 나가는 부드럽고 강한 소프트 스킬을 정교하게 다듬어 훌륭한 파트너가 되겠습니다.
+                        </p>
+                    </div>
+                    <span class="text-right text-[10px] font-mono text-cozy-accent mt-4 font-bold">TARGET 02</span>
+                </div>
+
+                <!-- 목표 카드 3 -->
+                <div class="bg-cozy-card p-6 rounded-2xl border border-cozy-border shadow-sm flex flex-col justify-between hover-card">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-950 flex items-center justify-center text-2xl border border-cozy-border">🧠</div>
+                        <h3 class="text-lg font-bold text-white">알고리즘 지식</h3>
+                        <p class="text-xs md:text-sm text-cozy-text/80 leading-relaxed">
+                            논리의 가시성을 확보하고 성능을 극대화해 줄 정밀한 알고리즘 지식을 단단히 내면화해 고효율 코드를 수립하겠습니다.
+                        </p>
+                    </div>
+                    <span class="text-right text-[10px] font-mono text-cozy-accent mt-4 font-bold">TARGET 03</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. GUESTBOOK SECTION -->
+    <section class="py-24 px-6 md:px-12 bg-black/10">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-cozy-accent text-xs font-semibold tracking-widest uppercase bg-cozy-card px-3 py-1.5 rounded-full border border-cozy-border font-serif">Guestbook</span>
+                <h2 class="text-3xl font-serif font-bold text-white mt-4">초록빛 아지트에 흔적 남기기</h2>
+                <p class="text-cozy-text/70 mt-2">수줍음이 가시고 한 걸음 친해진 준영이가 기다리니, 따스한 인사를 편하게 남겨 주세요!</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+                <!-- 방명록 작성 폼 -->
+                <form id="guestbookForm" class="md:col-span-5 bg-cozy-card p-6 rounded-2xl border border-cozy-border space-y-4 shadow-xs">
+                    <h3 class="font-serif font-bold text-lg text-white mb-2">방명록 남기기</h3>
+                    <div>
+                        <label class="block text-xs font-semibold text-cozy-text/80 mb-1" for="gbName">이름 / 닉네임</label>
+                        <input type="text" id="gbName" required placeholder="예쁜 이름" 
+                               class="w-full px-3 py-2 text-sm bg-cozy-deep border border-cozy-border rounded-lg focus:outline-none focus:ring-1 focus:ring-cozy-accent text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-cozy-text/80 mb-1" for="gbMessage">남길 이야기</label>
+                        <textarea id="gbMessage" rows="4" required placeholder="다정한 응원이나 재미있는 한마디를 적어주세요!" 
+                                  class="w-full px-3 py-2 text-sm bg-cozy-deep border border-cozy-border rounded-lg focus:outline-none focus:ring-1 focus:ring-cozy-accent text-white"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-cozy-text/80 mb-2">오늘 보내고 싶은 무드는?</label>
+                        <div class="flex gap-2">
+                            <button type="button" class="emoji-btn flex-1 py-2 text-lg bg-cozy-deep hover:bg-cozy-border border border-cozy-border rounded-lg transition" data-emoji="🍵">🍵</button>
+                            <button type="button" class="emoji-btn flex-1 py-2 text-lg bg-cozy-deep hover:bg-cozy-border border border-cozy-border rounded-lg transition" data-emoji="🚴">🚴</button>
+                            <button type="button" class="emoji-btn flex-1 py-2 text-lg bg-cozy-deep hover:bg-cozy-border border border-cozy-border rounded-lg transition" data-emoji="💪">💪</button>
+                            <button type="button" class="emoji-btn flex-1 py-2 text-lg bg-cozy-deep hover:bg-cozy-border border border-cozy-border rounded-lg transition" data-emoji="🔥">🔥</button>
+                        </div>
+                        <input type="hidden" id="gbEmoji" value="🍵">
+                    </div>
+                    <button type="submit" 
+                            class="w-full py-3 bg-cozy-accent text-cozy-deep rounded-lg hover:opacity-90 transition font-serif font-bold text-sm tracking-widest shadow-xs">
+                        방명록 발송하기
+                    </button>
+                </form>
+
+                <!-- 방명록 피드 리스트 -->
+                <div class="md:col-span-7 space-y-4">
+                    <h3 class="font-serif font-bold text-lg text-white mb-4 flex justify-between items-center">
+                        <span>도착한 우편함</span>
+                        <span id="guestCount" class="text-xs font-mono bg-cozy-accent/20 text-cozy-accent px-2.5 py-0.5 rounded-full border border-cozy-accent/30">0개</span>
+                    </h3>
+                    
+                    <div id="guestbookFeed" class="space-y-4 max-h-[420px] overflow-y-auto pr-2">
+                        <!-- JS 렌더링 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- UI 토스트 알림창 -->
+    <div id="toastMessage" class="fixed bottom-6 right-6 z-50 bg-cozy-card text-[#F1F7EE] px-5 py-3 rounded-xl shadow-lg border border-cozy-border flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300">
+        <span class="text-lg" id="toastIcon">💌</span>
+        <span id="toastText" class="text-sm font-light">전송되었습니다!</span>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="py-12 border-t border-cozy-border bg-cozy-deep text-center px-6 text-sm text-cozy-text/40">
+        <p class="font-serif">황준영 | 처음엔 조용하지만, 친해지면 먼저 다가가는 사람</p>
+        <p class="mt-2 text-xs font-mono">© 2026. Junyoung's Cozy Space. All rights reserved.</p>
+    </footer>
+
+    <!-- INTERACTION SCRIPTS -->
+    <script>
+        const lampGlow = document.getElementById('lampGlow');
+        const lampSvgBtn = document.getElementById('lampSvgBtn');
+        let lampIsOn = true;
+
+        function toggleLamp() {
+            lampIsOn = !lampIsOn;
+            if (lampIsOn) {
+                lampGlow.classList.add('active');
+                document.body.style.background = "linear-gradient(135deg, var(--cozy-bg-warm) 0%, var(--cozy-bg-deep) 100%)";
+                showToast("💡 스탠드를 켜서 짙은 녹음 속의 따스한 전구 빛을 머금었습니다.", "💡");
+            } else {
+                lampGlow.classList.remove('active');
+                // 한층 더 어두운 숲속 한가운데의 밤색
+                document.body.style.background = "linear-gradient(135deg, #132212 0%, #091208 100%)";
+                showToast("🔌 조명을 껐습니다. 서재 가득 짙은 밤안개 같은 고요함이 내려앉습니다.", "🌲");
+            }
+        }
+
+        lampGlow.addEventListener('click', toggleLamp);
+        lampSvgBtn.addEventListener('click', toggleLamp);
+
+        // 2. ISFJ 낯가림 조절 토글
+        function setTone(mode) {
+            const btnShy = document.getElementById('btnShy');
+            const btnFriendly = document.getElementById('btnFriendly');
+            const textShy = document.getElementById('textShy');
+            const textFriendly = document.getElementById('textFriendly');
+
+            if (mode === 'shy') {
+                btnShy.className = "flex-1 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 bg-cozy-border text-white shadow-xs";
+                btnFriendly.className = "flex-1 py-2.5 rounded-xl text-xs font-semibold transition-all duration-300 text-cozy-text/60 hover:text-white";
+                
+                textShy.classList.remove('hidden');
+                textFriendly.classList.add('hidden');
+                showToast("🔒 차분하고 예의 바른 낯가림 준영이 모드입니다.", "🔒");
+            } else {
+                btnFriendly.className = "flex-1 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 bg-cozy-accent text-cozy-deep shadow-xs";
+                btnShy.className = "flex-1 py-2.5 rounded-xl text-xs font-semibold transition-all duration-300 text-cozy-text/60 hover:text-white";
+                
+                textFriendly.classList.remove('hidden');
+                textShy.classList.add('hidden');
+                showToast("🔑 해제 성공! 먼저 장난도 거는 유쾌한 수다쟁이 준영이가 나섭니다.", "🔑");
+            }
+        }
+
+        // 3. 이모지 버튼 설정
+        const emojiBtns = document.querySelectorAll('.emoji-btn');
+        const gbEmojiInput = document.getElementById('gbEmoji');
+        
+        emojiBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                emojiBtns.forEach(b => b.classList.remove('bg-cozy-border', 'border-cozy-accent', 'text-white'));
+                btn.classList.add('bg-cozy-border', 'border-cozy-accent', 'text-white');
+                gbEmojiInput.value = btn.dataset.emoji;
+            });
+        });
+        // 이모지 기본값 세팅
+        emojiBtns[0].classList.add('bg-cozy-border', 'border-cozy-accent', 'text-white');
+
+        // 4. 로컬 스토리지 방명록 구현
+        const guestbookForm = document.getElementById('guestbookForm');
+        const guestbookFeed = document.getElementById('guestbookFeed');
+        const guestCountBadge = document.getElementById('guestCount');
+
+        let guestbookItems = JSON.parse(localStorage.getItem('junyoungGuestbook_green_dark')) || [
+            { id: 1, name: "싸피 14반 짝꿍", message: "준영님 처음엔 조용한 줄 알았는데 수다 한 번 시작하니까 진짜 완전 꿀잼이신 거 있죠! ㅋㅋㅋ 얼른 더 맛있는 대화 많이 해요! 🌱", emoji: "🍵", date: "2026-07-09" },
+            { id: 2, name: "운동 러버", message: "책임감 있게 헬스 매일 다니는 성실함 멋져요. 나중에 한강에서 라이딩도 한 번 시원하게 함께 달려봐요!", emoji: "🚴", date: "2026-07-10" }
+        ];
+
+        function renderFeed() {
+            guestbookFeed.innerHTML = "";
+            guestCountBadge.innerText = `${guestbookItems.length}개`;
+
+            guestbookItems.slice().reverse().forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-cozy-card p-4 rounded-xl border border-cozy-border shadow-xs flex justify-between items-start space-x-3 transition hover:shadow-md";
+                card.innerHTML = `
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="font-bold text-sm text-white">${escapeHTML(item.name)}</span>
+                            <span class="text-[10px] text-cozy-text/40 font-mono">${item.date}</span>
+                        </div>
+                        <p class="text-xs md:text-sm text-cozy-text/80 whitespace-pre-line leading-relaxed">${escapeHTML(item.message)}</p>
+                    </div>
+                    <div class="text-lg px-2 py-1 bg-cozy-deep/40 rounded-lg border border-cozy-border">${item.emoji}</div>
+                `;
+                guestbookFeed.appendChild(card);
+            });
+        }
+
+        guestbookForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('gbName').value.trim();
+            const message = document.getElementById('gbMessage').value.trim();
+            const emoji = gbEmojiInput.value;
+            const date = new Date().toISOString().split('T')[0];
+
+            if (!name || !message) return;
+
+            const newItem = {
+                id: Date.now(),
+                name,
+                message,
+                emoji,
+                date
+            };
+
+            guestbookItems.push(newItem);
+            localStorage.setItem('junyoungGuestbook_green_dark', JSON.stringify(guestbookItems));
+            
+            renderFeed();
+            guestbookForm.reset();
+            
+            // 이모지 기본값 초기화
+            emojiBtns.forEach(b => b.classList.remove('bg-cozy-border', 'border-cozy-accent', 'text-white'));
+            emojiBtns[0].classList.add('bg-cozy-border', 'border-cozy-accent', 'text-white');
+            gbEmojiInput.value = "🍵";
+
+            showToast("🎁 소중한 마음의 응원 한 조각이 배달되었습니다!", "🎁");
+        });
+
+        // 5. 토스트 메시지 함수
+        const toast = document.getElementById('toastMessage');
+        const toastText = document.getElementById('toastText');
+        const toastIcon = document.getElementById('toastIcon');
+        let toastTimeout;
+
+        function showToast(text, icon = "💌") {
+            clearTimeout(toastTimeout);
+            toastIcon.innerText = icon;
+            toastText.innerText = text;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3200);
+        }
+
+        // HTML 이스케이프
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag] || tag)
+            );
+        }
+
+        // 초기 시작
+        window.onload = function() {
+            renderFeed();
+            lampGlow.classList.add('active');
+        };
+    </script>
+</body>
+</html>
